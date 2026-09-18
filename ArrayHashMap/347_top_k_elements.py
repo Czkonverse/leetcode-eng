@@ -1,4 +1,5 @@
 from collections import defaultdict
+import random
 
 class Solution:
     def topKFrequent(self, nums: list[int], k: int) -> list[int]:
@@ -16,7 +17,17 @@ class Solution:
                 res.append(k)
 
         return res
-            
+
+    # quick select - similar to quick sort
+    def topKFrequent(self, nums: list[int], k: int) -> list[int]:
+        record = defaultdict(int)
+
+        for num in nums:
+            record[num] += 1
+
+        unique = list(record.keys())
+
+        pivot_idx = random.randint(0, len(nums) - 1)
 
 if __name__ == "__main__":
     nums = [1,1,1,2,2,3]
