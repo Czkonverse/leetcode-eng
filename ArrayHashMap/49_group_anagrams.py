@@ -26,7 +26,6 @@ Input: strs = ["a"]
 Output: [["a"]]
 
 """
-from collections import defaultdict
 
 """
 My first idea is to use a hash map.
@@ -41,6 +40,8 @@ Finally, I return all the groups stored in the hash map.
 
 If there are n strings and the maximum length of a string is k, the time complexity is O(n × k log k), because sorting each string takes O(k log k).
 """
+from collections import defaultdict
+
 class Solution:
     def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
 
