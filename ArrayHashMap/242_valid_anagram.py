@@ -17,8 +17,9 @@ Output: false
 """
 
 """
-I use a hash map to count the frequency of each character in s. 
-Then I iterate through t and decrease the corresponding count. 
+First, if the two strings have different lengths, they cannot be anagrams.
+Then, I use a hash map to count the frequency of each character in s. 
+After that, I iterate through t and decrease the corresponding count. 
 If a count becomes zero, I remove that character from the hash map. 
 Finally, if the hash map is empty, the two strings are anagrams.
 """
