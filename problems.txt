@@ -7,18 +7,18 @@
 |  5 | 167      | Two Sum II                      | Two Pointers       | ✅ Review |
 |  6 | 49       | Group Anagrams                  | HashMap            | ✅ Review |
 |  7 | 2        | Add Two Numbers                 | Linked List        | ✅ Review |
-|  8 | 347      | Top K Frequent Elements         | Heap / Quickselect | 🔄 进行中   |
+|  8 | 347      | Top K Frequent Elements         | Heap / Quickselect | ✅ Review |
 
 
 
-|  # |  LC | Problem                                        | Difficulty | Pattern                |
-| -: | --: | ---------------------------------------------- | ---------- | ---------------------- |
-|  9 | 125 | Valid Palindrome                               | Easy       | Two Pointers           |
-| 10 |  15 | 3Sum                                           | Medium     | Sorting + Two Pointers |
-| 11 |  11 | Container With Most Water                      | Medium     | Two Pointers           |
-| 12 | 238 | Product of Array Except Self                   | Medium     | Prefix / Suffix        |
-| 13 | 128 | Longest Consecutive Sequence                   | Medium     | HashSet                |
-| 14 |  53 | Maximum Subarray                               | Medium     | Greedy / DP            |
+|  # |  LC | Problem                                        | Difficulty | Pattern                |         |
+| -: | --: | ---------------------------------------------- | ---------- | ---------------------- | --------|
+|  9 | 125 | Valid Palindrome                               | Easy       | Two Pointers           |✅ Review |
+| 10 |  15 | 3Sum                                           | Medium     | Sorting + Two Pointers |✅ Review |
+| 11 |  11 | Container With Most Water                      | Medium     | Two Pointers           |✅ Review |
+| 12 | 238 | Product of Array Except Self                   | Medium     | Prefix / Suffix        |✅ Review |
+| 13 | 128 | Longest Consecutive Sequence                   | Medium     | HashSet                |✅ Review |
+| 14 |  53 | Maximum Subarray                               | Medium     | Greedy / DP            |✅ Review |
 | 15 |   3 | Longest Substring Without Repeating Characters | Medium     | Sliding Window         |
 | 16 | 424 | Longest Repeating Character Replacement        | Medium     | Sliding Window         |
 | 17 | 567 | Permutation in String                          | Medium     | Sliding Window         |
