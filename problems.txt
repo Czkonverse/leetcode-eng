@@ -19,13 +19,13 @@
 | 12 | 238 | Product of Array Except Self                   | Medium     | Prefix / Suffix        |✅ Review |
 | 13 | 128 | Longest Consecutive Sequence                   | Medium     | HashSet                |✅ Review |
 | 14 |  53 | Maximum Subarray                               | Medium     | Greedy / DP            |✅ Review |
-| 15 |   3 | Longest Substring Without Repeating Characters | Medium     | Sliding Window         |
-| 16 | 424 | Longest Repeating Character Replacement        | Medium     | Sliding Window         |
-| 17 | 567 | Permutation in String                          | Medium     | Sliding Window         |
-| 18 |  20 | Valid Parentheses                              | Easy       | Stack                  |
-| 19 | 155 | Min Stack                                      | Medium     | Stack / Design         |
-| 20 | 739 | Daily Temperatures                             | Medium     | Monotonic Stack        |
-| 21 | 704 | Binary Search                                  | Easy       | Binary Search          |
+| 15 |   3 | Longest Substring Without Repeating Characters | Medium     | Sliding Window         |✅ Review |
+| 16 | 424 | Longest Repeating Character Replacement        | Medium     | Sliding Window         |✅ Review |
+| 17 | 567 | Permutation in String                          | Medium     | Sliding Window         |✅ Review |
+| 18 |  20 | Valid Parentheses                              | Easy       | Stack                  |✅ Review |
+| 19 | 155 | Min Stack                                      | Medium     | Stack / Design         |✅ Review |
+| 20 | 739 | Daily Temperatures                             | Medium     | Monotonic Stack        |✅ Review |
+| 21 | 704 | Binary Search                                  | Easy       | Binary Search          |✅ Review |
 | 22 |  33 | Search in Rotated Sorted Array                 | Medium     | Binary Search          |
 | 23 | 153 | Find Minimum in Rotated Sorted Array           | Medium     | Binary Search          |
 
