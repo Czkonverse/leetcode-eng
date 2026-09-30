@@ -29,6 +29,21 @@ Explanation: The original array was [11,13,15,17] and it was rotated 4 times.
 [4,5,0,1,2]
 """
 
+"""
+I use binary search to find the minimum value.
+
+The problem assumes all values are unique, so there are no duplicates. This makes the comparison between `nums[mid]` and `nums[right]` unambiguous.
+
+If `nums[mid] > nums[right]`, the minimum must be on the right side, so I move `left` to `mid + 1`.
+
+Otherwise, the minimum is at `mid` or on the left side, so I set `right = mid` to keep `mid` in the search range.
+
+When `left == right`, that position is the minimum.
+
+The time complexity is O(log n), and the space complexity is O(1).
+
+"""
+
 
 class Solution:
     def findMin(self, nums: list[int]) -> int:
