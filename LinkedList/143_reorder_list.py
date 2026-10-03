@@ -25,6 +25,16 @@ class ListNode:
         self.next = next
 
 
+"""
+My first approach is to store all the nodes in an array.
+
+Then I use two pointers, one from the beginning and one from the end, and reconnect the nodes in the required order: first, last, second, second-last, and so on.
+
+This approach is straightforward and runs in O(n) time because I traverse the list once to store the nodes and once more to reorder them. 
+However, it requires O(n) extra space for the array.
+"""
+
+
 class Solution:
     def reorderList(self, head: ListNode | None) -> None:
 
@@ -51,6 +61,22 @@ class Solution:
             right -= 1
 
         nodes[left].next = None
+
+
+"""
+To optimize the space complexity, I noticed that I do not actually need to store all the nodes. I only need the first half in forward order and the second half in reverse order.
+
+So I improve the solution in three steps.
+
+First, I use slow and fast pointers to find the middle of the linked list and split it into two halves.
+
+Second, I reverse the second half of the list in place.
+
+Finally, I merge the two halves alternately. I save the next nodes before changing the pointers, then connect one node from the first half and one node from the reversed second half.
+
+The optimized solution still takes O(n) time, because finding the middle, reversing the second half, and merging the lists are all linear operations.
+The space complexity is reduced from O(n) to O(1), because I only use a constant number of pointers.
+"""
 
 
 class Solution:
