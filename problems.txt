@@ -38,6 +38,7 @@
 | 26 | 141 | Linked List Cycle                     | Easy       | Fast / Slow Pointer |
 | 27 |  19 | Remove Nth Node From End              | Medium     | Fast / Slow Pointer |
 | 28 | 143 | Reorder List                          | Medium     | Linked List         |
+
 | 29 | 226 | Invert Binary Tree                    | Easy       | Tree DFS            |
 | 30 | 104 | Maximum Depth of Binary Tree          | Easy       | DFS                 |
 | 31 | 100 | Same Tree                             | Easy       | DFS                 |
