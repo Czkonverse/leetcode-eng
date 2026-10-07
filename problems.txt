@@ -45,8 +45,8 @@
 | 32 | 102 | Binary Tree Level Order Traversal     | Medium     | BFS                 |
 | 33 |  98 | Validate Binary Search Tree           | Medium     | BST / DFS           |
 | 34 | 230 | Kth Smallest Element in BST           | Medium     | BST                 |
-
 | 35 | 236 | Lowest Common Ancestor of Binary Tree | Medium     | Tree recursion      |
+
 | 36 | 215 | Kth Largest Element in an Array       | Medium     | Heap / Quickselect  |
 | 37 |  23 | Merge K Sorted Lists                  | Hard       | Heap                |
 | 38 |  56 | Merge Intervals                       | Medium     | Intervals           |
