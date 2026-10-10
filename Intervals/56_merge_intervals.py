@@ -35,3 +35,11 @@ class Solution:
                 res.append([start, end])
 
         return res
+
+
+import heapq
+
+
+class Solution:
+    def merge(self, intervals: list[list[int]]) -> list[list[int]]:
+        pass
