@@ -35,6 +35,8 @@ The time complexity is O(n²), because I check all pairs of lines using two nest
 The space complexity is O(1), because I only use a few extra variables and do not use any additional data structure.
 
 """
+
+
 class Solution:
     def maxArea(self, height: list[int]) -> int:
         max_area = 0
@@ -48,7 +50,7 @@ class Solution:
                 max_area = max(max_area, area)
 
         return max_area
-    
+
 
 """
 A better approach is to use two pointers.
@@ -72,6 +74,8 @@ The time complexity is O(n), because each pointer only moves in one direction an
 The space complexity is O(1), because I only use a few extra variables such as `left`, `right`, and `max_area`.
 
 """
+
+
 class Solution:
     def maxArea(self, height: list[int]) -> int:
         left = 0
@@ -90,5 +94,23 @@ class Solution:
                 left += 1
             else:
                 right -= 1
+
+        return max_area
+
+
+# brute=-force approach
+class Solution:
+    def maxArea(self, height: list[int]) -> int:
+        left = 0
+        right = len(height) - 1
+
+        max_area = 0
+
+        for left in range(len(height)):
+            for right in range(left + 1, len(height)):
+                area = (right - left) * min(height[left], height[right])
+
+                if max_area < area:
+                    max_area = area
 
         return max_area
