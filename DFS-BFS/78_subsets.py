@@ -17,4 +17,11 @@ Output: [[],[0]]
 
 class Solution:
     def subsets(self, nums: list[int]) -> list[list[int]]:
-        pass
+        path = []
+
+        def backtrack():
+            for num in nums:
+                if num in path:
+                    continue
+
+            path.append(num)
