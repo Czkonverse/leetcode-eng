@@ -17,11 +17,23 @@ Output: [[],[0]]
 
 class Solution:
     def subsets(self, nums: list[int]) -> list[list[int]]:
+        result = []
         path = []
 
-        def backtrack():
-            for num in nums:
-                if num in path:
-                    continue
+        def dfs(index):
+            if index == len(nums):
+                result.append(path.copy())
+                return
 
-            path.append(num)
+            # Branch 1: Include current element
+            path.append(nums[index])
+            dfs(index + 1)
+
+            # Backtracking
+            path.pop()
+
+            # Branch 2: Exclude current element
+            dfs(index + 1)
+
+        dfs(0)
+        return result
