@@ -47,16 +47,3 @@ class Solution:
             dp[0], dp[1] = dp[1], current
 
         return dp[1]
-
-
-class Solution:
-    def rob(self, nums: list[int]) -> int:
-        nums_new = nums[-2:] + nums
-        dp = [0, 0]
-
-        for i in range(len(nums_new)):
-            current = max(dp[0] + nums_new[i], dp[1])
-
-            dp[0], dp[1] = dp[1], current
-
-        return dp[1]
