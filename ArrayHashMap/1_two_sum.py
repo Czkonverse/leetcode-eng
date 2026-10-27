@@ -27,6 +27,8 @@ from typing import List
 My first thought is to use a brute-force approach. I can iterate through the array and, for each number, search for its complement in the remaining part of the array.
 However, this requires O(n²) time. 
 """
+
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         for i in range(len(nums)):
@@ -37,7 +39,6 @@ class Solution:
                     return [i, j]
 
         return []
-                
 
 
 """
@@ -45,6 +46,7 @@ But we can improve this by using a hash map. While iterating the array, I store 
 For each number, I calculate its complement and check whether it already exists in the hash map. If it does, I return the two indices.
 This reduces the time complexity from O(n²) to O(n), at the cost of O(n) extra space.
 """
+
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -60,4 +62,3 @@ class Solution:
             comp_dict[num] = idx
 
         return []
-
