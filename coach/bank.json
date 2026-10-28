@@ -1,0 +1,552 @@
+[
+  {
+    "lc": 26,
+    "title": "Remove Duplicates from Sorted Array",
+    "diff": "Easy",
+    "pattern": "Two Pointers",
+    "cn": "数组已排序，重复元素相邻。慢指针 write 指向下一个可写位置，快指针 read 扫描；只有 nums[read] != nums[write-1] 时才写入。",
+    "en": "Since the array is sorted, duplicates are adjacent. I keep a write pointer for the next unique slot and scan with a read pointer, copying a value over only when it differs from the last written one. That gives O(n) time and O(1) extra space.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "返回的是新长度 k，不是数组本身；比较对象是 nums[write-1] 而不是 nums[read-1]。"
+  },
+  {
+    "lc": 189,
+    "title": "Rotate Array",
+    "diff": "Medium",
+    "pattern": "Reverse Trick",
+    "cn": "整体反转 + 前 k 个反转 + 后 n-k 个反转，三步到位；k 先对 n 取模。",
+    "en": "I rotate in place with three reversals: reverse the whole array, then reverse the first k elements, then reverse the rest. Each element moves exactly once, so it is O(n) time and O(1) space.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "k 可能大于 n，先 k %= n；k == 0 直接返回。"
+  },
+  {
+    "lc": 75,
+    "title": "Sort Colors",
+    "diff": "Medium",
+    "pattern": "Dutch National Flag",
+    "cn": "三指针 low / mid / high：low 左边全是 0，high 右边全是 2，mid 扫描未知区。遇到 0 与 low 交换，遇到 2 与 high 交换。",
+    "en": "This is the Dutch national flag problem. Everything before low is 0, everything after high is 2, and mid scans the unknown region. Swapping with high does not advance mid because the incoming value is still unclassified.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "与 high 交换后 mid 不能自增；循环条件是 mid <= high。"
+  },
+  {
+    "lc": 169,
+    "title": "Majority Element",
+    "diff": "Easy",
+    "pattern": "Boyer-Moore Voting",
+    "cn": "摩尔投票：维护候选数和计数器，遇到相同就 ++，不同就 --，归零就换候选。出现次数过半的数最后一定留在候选位。",
+    "en": "I use Boyer-Moore voting: keep a candidate and a counter, decrement on mismatch and reset the candidate at zero. The majority element survives because it outnumbers all other elements combined.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "题目保证多数元素存在；若不保证，需要第二遍验证候选数出现次数。"
+  },
+  {
+    "lc": 31,
+    "title": "Next Permutation",
+    "diff": "Medium",
+    "pattern": "Array Manipulation",
+    "cn": "从右往左找第一个下降点 i（nums[i] < nums[i+1]），再从右找第一个大于 nums[i] 的 j，交换后反转 i+1 到末尾。",
+    "en": "I find the rightmost index i where nums[i] is less than nums[i+1], then the rightmost j whose value is greater than nums[i], swap them, and reverse the suffix. The suffix is decreasing, so reversing it yields the smallest next arrangement.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "完全降序时 i 找不到，直接反转整个数组得到最小排列。"
+  },
+  {
+    "lc": 48,
+    "title": "Rotate Image",
+    "diff": "Medium",
+    "pattern": "Matrix",
+    "cn": "顺时针 90° = 先沿主对角线转置，再左右翻转每一行；或者按层做四点轮换。",
+    "en": "A clockwise 90-degree rotation equals a transpose followed by reversing each row. I swap (i, j) with (j, i) over the upper triangle, then reverse every row, which is O(n^2) time and O(1) space.",
+    "cx": "O(n^2) time / O(1) space",
+    "trap": "转置只遍历上三角；逆时针是转置 + 上下翻转，注意方向。"
+  },
+  {
+    "lc": 73,
+    "title": "Set Matrix Zeroes",
+    "diff": "Medium",
+    "pattern": "In-place Marking",
+    "cn": "用第一行和第一列当作标记位，另外用两个布尔量记录第一行/第一列本身是否要清零。",
+    "en": "I use the first row and first column as marker arrays instead of allocating new ones, plus two booleans for whether those lines themselves must be zeroed. Then I clear cells in a second pass, keeping it O(1) space.",
+    "cx": "O(mn) time / O(1) space",
+    "trap": "第二遍清零要从右下往左上走，否则标记位会被提前覆盖。"
+  },
+  {
+    "lc": 41,
+    "title": "First Missing Positive",
+    "diff": "Hard",
+    "pattern": "Index as Hash",
+    "cn": "答案一定在 1..n+1 之间。把值 v 交换到下标 v-1 的位置（cyclic sort），再扫一遍找第一个 nums[i] != i+1。",
+    "en": "The answer must lie in 1 to n+1, so I place each value v at index v-1 by swapping until every value is home or out of range. Then the first index that does not hold i+1 is the answer, all in O(n) time and O(1) space.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "用 while 交换，且条件写成 nums[i] != nums[nums[i]-1]，否则会死循环。"
+  },
+  {
+    "lc": 560,
+    "title": "Subarray Sum Equals K",
+    "diff": "Medium",
+    "pattern": "Prefix Sum + Hash Map",
+    "cn": "子数组和 = 两个前缀和之差：prefix[j] - prefix[i] = k。哈希表存之前每个前缀和出现的次数，边扫边查 prefix - k。",
+    "en": "A subarray sum is the difference of two prefix sums, so I keep a hash map from prefix sum to its frequency and look up the current prefix minus k. That turns the O(n^2) enumeration into O(n) time with O(n) space.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "初始化 map 为 {0: 1}；必须先查再存，否则 k = 0 时会把自己算进去。"
+  },
+  {
+    "lc": 525,
+    "title": "Contiguous Array",
+    "diff": "Medium",
+    "pattern": "Prefix Sum + Hash Map",
+    "cn": "把 0 当成 -1，问题转化为「和为 0 的最长子数组」。哈希表存每个前缀和第一次出现的下标，遇到相同前缀和就更新长度。",
+    "en": "I treat 0 as -1, so equal numbers of zeros and ones become a zero-sum subarray. I store the first index where each prefix sum appears and take the farthest repeat.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "只记录第一次出现的位置，才能得到最长；初始 {0: -1}。"
+  },
+  {
+    "lc": 209,
+    "title": "Minimum Size Subarray Sum",
+    "diff": "Medium",
+    "pattern": "Variable Sliding Window",
+    "cn": "右指针扩张累加，一旦 sum >= target 就收缩左指针并更新最短长度。全为正数，所以窗口和单调。",
+    "en": "Because all numbers are positive, I can grow the window with the right pointer and shrink from the left while the sum is at least target, recording the shortest valid length. Each element enters and leaves once, so it is O(n).",
+    "cx": "O(n) time / O(1) space",
+    "trap": "先判断再收缩，收缩时同步减掉 nums[left]；无解返回 0。"
+  },
+  {
+    "lc": 1004,
+    "title": "Max Consecutive Ones III",
+    "diff": "Medium",
+    "pattern": "Sliding Window",
+    "cn": "窗口内最多容忍 k 个 0，0 的个数超过 k 就移动左指针。答案就是窗口最大长度。",
+    "en": "I maintain a window containing at most k zeros. When the zero count exceeds k, I move the left pointer forward until the window is valid again, and the maximum window length is the answer.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "移出左端时要把对应计数减掉；k 可能大于等于数组长度。"
+  },
+  {
+    "lc": 239,
+    "title": "Sliding Window Maximum",
+    "diff": "Hard",
+    "pattern": "Monotonic Deque",
+    "cn": "双端队列存下标、值单调递减，队首就是当前窗口最大值。入队前从队尾弹掉更小的值，队首过期就弹出。",
+    "en": "I keep a deque of indices with decreasing values, so the front is always the maximum of the current window. I pop smaller values from the back before pushing, and drop the front when it leaves the window, giving O(n) total.",
+    "cx": "O(n) time / O(k) space",
+    "trap": "队列存下标而不是值；先移除过期下标，再加入当前元素。"
+  },
+  {
+    "lc": 76,
+    "title": "Minimum Window Substring",
+    "diff": "Hard",
+    "pattern": "Sliding Window + Counter",
+    "cn": "need 记录 t 的字符需求，窗口计数 + formed 记录已满足的字符种数。formed 满时收缩左边界并记录最短窗口。",
+    "en": "I expand the right edge until the window covers every character in t, then shrink from the left while it stays valid, recording the shortest window. The formed counter tracks how many distinct characters have reached their required count.",
+    "cx": "O(m + n) time / O(m) space",
+    "trap": "只需要统计 t 中出现过的字符；更新最短窗口时要包含左右两端。"
+  },
+  {
+    "lc": 150,
+    "title": "Evaluate Reverse Polish Notation",
+    "diff": "Medium",
+    "pattern": "Stack",
+    "cn": "数字入栈；遇到运算符先弹出右操作数、再弹左操作数，计算后压回。最后栈里唯一的值就是答案。",
+    "en": "I push numbers onto a stack and, for each operator, pop the right operand then the left one, compute, and push the result back. The single value left at the end is the answer.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "除法要向零截断，Python 的 // 是向下取整，负号时要额外处理。"
+  },
+  {
+    "lc": 394,
+    "title": "Decode String",
+    "diff": "Medium",
+    "pattern": "Stack",
+    "cn": "两个栈：一个存外层已拼好的字符串，一个存重复次数。遇 '[' 压栈并重置，遇 ']' 弹出拼接。",
+    "en": "I use two stacks, one for the string built so far and one for the repeat count, pushing on an opening bracket and popping on a closing one. That handles arbitrary nesting without recursion.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "重复次数可能是多位数；']' 时把 cur * count 接到栈顶字符串后面。"
+  },
+  {
+    "lc": 84,
+    "title": "Largest Rectangle in Histogram",
+    "diff": "Hard",
+    "pattern": "Monotonic Stack",
+    "cn": "单调递增栈存下标。遇到更矮的柱子就弹出栈顶并计算以它为高的矩形，宽度由新柱子和新的栈顶夹出来。",
+    "en": "I keep a stack of indices with increasing heights. When a shorter bar arrives, I pop and compute the rectangle using the popped height, with the width bounded by the new bar and the new stack top. Sentinel zeros at both ends flush the stack.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "宽度是 i - stack[-1] - 1；末尾补一个 0 保证清空栈。"
+  },
+  {
+    "lc": 853,
+    "title": "Car Fleet",
+    "diff": "Medium",
+    "pattern": "Sorting + Greedy",
+    "cn": "按位置从后往前处理，计算到达 target 的时间。若该车到达时间 <= 前面车队的时间，就会追上去合并。",
+    "en": "I sort cars by position descending and compute each arrival time. A car catches up to the fleet ahead if its arrival time is less than or equal to that fleet's time, so it merges; otherwise it starts a new fleet.",
+    "cx": "O(n log n) time / O(n) space",
+    "trap": "时间用浮点计算即可；同位置的情况题目保证不会出现。"
+  },
+  {
+    "lc": 74,
+    "title": "Search a 2D Matrix",
+    "diff": "Medium",
+    "pattern": "Binary Search",
+    "cn": "把 m×n 矩阵看成长度 m*n 的有序数组，mid 映射回行列：row = mid // n, col = mid % n。",
+    "en": "I treat the matrix as a flat sorted array of length m times n, mapping the middle index back with row equals mid over n and column equals mid modulo n. That keeps standard binary search at O(log(mn)).",
+    "cx": "O(log(mn)) time / O(1) space",
+    "trap": "右边界是 m*n - 1；列数取 matrix[0] 的长度。"
+  },
+  {
+    "lc": 875,
+    "title": "Koko Eating Bananas",
+    "diff": "Medium",
+    "pattern": "Binary Search on Answer",
+    "cn": "答案（速度）范围是 [1, max(piles)]。对候选速度 k，所需小时数 = sum(ceil(pile / k))，据此调整二分边界。",
+    "en": "Instead of searching the piles, I binary search the answer itself: the eating speed. For a candidate speed I sum ceil(pile over speed) and check whether it fits in h hours, then move the bound accordingly.",
+    "cx": "O(n log max(piles)) time / O(1) space",
+    "trap": "上取整写成 (p + k - 1) // k；h 小于堆数时无解（题目保证有解）。"
+  },
+  {
+    "lc": 162,
+    "title": "Find Peak Element",
+    "diff": "Medium",
+    "pattern": "Binary Search",
+    "cn": "若 nums[mid] < nums[mid+1]，说明右侧上坡、必有峰，left = mid + 1；否则峰在 mid 或左侧，right = mid。",
+    "en": "If the middle element is smaller than its right neighbor, the slope goes up, so a peak must exist on the right; otherwise it is at mid or to the left. I move the bound accordingly and converge in O(log n).",
+    "cx": "O(log n) time / O(1) space",
+    "trap": "比较的是 mid 和 mid+1；right 初值 len - 1，循环条件 left < right。"
+  },
+  {
+    "lc": 4,
+    "title": "Median of Two Sorted Arrays",
+    "diff": "Hard",
+    "pattern": "Binary Search + Partition",
+    "cn": "在较短的数组上二分切分点，使左半部分元素个数为 (m+n+1)//2，且左半最大 <= 右半最小。中位数由边界值算出。",
+    "en": "I binary search the partition in the shorter array so the left half holds exactly half the elements and every left element is at most every right element. The median then comes from the boundary values, in O(log(min(m, n))).",
+    "cx": "O(log(min(m, n))) time / O(1) space",
+    "trap": "切在两端时用正负无穷兜底；元素总数为奇数时中位数是左半最大值。"
+  },
+  {
+    "lc": 138,
+    "title": "Copy List with Random Pointer",
+    "diff": "Medium",
+    "pattern": "Hash Map",
+    "cn": "两遍：第一遍建立 原节点 -> 新节点 的映射并创建所有节点；第二遍用映射连 next 和 random。",
+    "en": "I do two passes with a hash map from old node to new node: first clone every node, then wire next and random using the map. That is O(n) time and O(n) space, and it handles a random pointer to any node.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "random 可能为 null；不要直接复制指针，否则仍指向原链表。"
+  },
+  {
+    "lc": 92,
+    "title": "Reverse Linked List II",
+    "diff": "Medium",
+    "pattern": "Linked List",
+    "cn": "dummy 节点 + 走到 left 的前一个节点，然后用头插法反转 right - left + 1 个节点，最后接回尾部。",
+    "en": "I use a dummy head, walk to the node before position left, then reverse the segment with head insertion and reconnect the tail. One pass, O(1) extra space.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "left == right 时不变；反转后原来的头变成尾，要接上剩余部分。"
+  },
+  {
+    "lc": 25,
+    "title": "Reverse Nodes in k-Group",
+    "diff": "Hard",
+    "pattern": "Linked List",
+    "cn": "每组先数够 k 个节点再反转这一组，把上一组的尾接到新头；不足 k 个保持原样。",
+    "en": "For each group I first check that k nodes remain, then reverse exactly those k in place and connect the previous group's tail to the new head. If fewer than k remain, I leave them untouched.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "反转后原头变成组尾，要指向下一组的头；递归写法注意返回值。"
+  },
+  {
+    "lc": 287,
+    "title": "Find the Duplicate Number",
+    "diff": "Medium",
+    "pattern": "Floyd Cycle Detection",
+    "cn": "把下标 i 指向 nums[i] 看成链表边，重复的数就是环的入口。快慢指针相遇后，一个回到起点同速再走。",
+    "en": "I model the array as a linked list where index i points to nums[i], so a duplicate value means a cycle. Floyd's algorithm finds the cycle entrance in O(n) time and O(1) space.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "不能修改数组；第二阶段从下标 0 出发，与慢指针同速前进。"
+  },
+  {
+    "lc": 199,
+    "title": "Binary Tree Right Side View",
+    "diff": "Medium",
+    "pattern": "BFS",
+    "cn": "层序遍历，每层的最后一个节点就是该层从右侧能看到的节点。",
+    "en": "I do a level-order BFS and take the last node of each level, since that is the one visible from the right. That is O(n) time and O(width) space.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "DFS 也可以：优先访问右子树并按深度记录第一个遇到的节点。"
+  },
+  {
+    "lc": 105,
+    "title": "Construct Binary Tree from Preorder and Inorder",
+    "diff": "Medium",
+    "pattern": "Divide and Conquer",
+    "cn": "preorder 首元素是根，用哈希表在 inorder 中 O(1) 定位，划分左右子树区间后递归。",
+    "en": "The first preorder element is the root; its position in inorder splits the remaining elements into left and right subtrees. I precompute an inorder index map so each lookup is O(1), giving O(n) overall.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "递归参数用 inorder 的左右边界；preorder 的指针要随递归前进。"
+  },
+  {
+    "lc": 124,
+    "title": "Binary Tree Maximum Path Sum",
+    "diff": "Hard",
+    "pattern": "Tree DP",
+    "cn": "后序返回「以当前节点为端点向下的最大路径和」，全局答案用 左 + 根 + 右 更新。负数分支直接舍弃。",
+    "en": "For each node I return the best downward path starting there, and update the global answer with left plus node plus right, the best path bending at that node. Negative subtrees are dropped by clamping at zero.",
+    "cx": "O(n) time / O(h) space",
+    "trap": "返回给父节点时只能选左右之一；答案初值设负无穷。"
+  },
+  {
+    "lc": 297,
+    "title": "Serialize and Deserialize Binary Tree",
+    "diff": "Hard",
+    "pattern": "Design + DFS",
+    "cn": "前序遍历序列化，空节点用特殊标记（如 #）。反序列化按同样顺序递归消费 token，标记决定树形。",
+    "en": "I serialize with preorder traversal and a sentinel for nulls, then deserialize by consuming tokens in the same order recursively. The sentinel is what makes the tree shape unambiguous.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "分隔符要统一；空树也要能正确往返。"
+  },
+  {
+    "lc": 621,
+    "title": "Task Scheduler",
+    "diff": "Medium",
+    "pattern": "Greedy + Math",
+    "cn": "瓶颈是出现次数最多的任务，它之间必须隔 n 个空位。答案 = max(任务总数, (maxFreq - 1) * (n + 1) + 并列最多的任务数)。",
+    "en": "The bottleneck is the most frequent task, which needs n slots between copies. The answer is the max of the total number of tasks and (maxFreq - 1) times (n + 1), plus the number of tasks tied at maxFreq.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "用 max 兜底，因为空位不够时任务可以排满、不需要额外 idle。"
+  },
+  {
+    "lc": 295,
+    "title": "Find Median from Data Stream",
+    "diff": "Hard",
+    "pattern": "Two Heaps",
+    "cn": "大顶堆存较小的一半，小顶堆存较大的一半，保持两个堆大小差不超过 1。中位数由堆顶得出。",
+    "en": "I keep a max-heap for the lower half and a min-heap for the upper half, rebalancing after each insertion so their sizes differ by at most one. The median is the top of the larger heap or the average of both tops.",
+    "cx": "O(log n) add / O(1) find / O(n) space",
+    "trap": "Python 用负数模拟大顶堆；先入堆再平衡，保证有序性。"
+  },
+  {
+    "lc": 79,
+    "title": "Word Search",
+    "diff": "Medium",
+    "pattern": "Grid DFS + Backtracking",
+    "cn": "从每个格子出发 DFS 逐字符匹配，走过的格子临时改成 '#' 防止复用，回溯时恢复。",
+    "en": "I DFS from every cell, matching characters one by one and temporarily marking visited cells so they cannot be reused, then restoring them on backtrack.",
+    "cx": "O(mn * 4^L) time / O(L) space",
+    "trap": "先判断越界和字符不匹配再递归；回溯一定要恢复标记。"
+  },
+  {
+    "lc": 131,
+    "title": "Palindrome Partitioning",
+    "diff": "Medium",
+    "pattern": "Backtracking",
+    "cn": "回溯枚举切分点，当前子串是回文才继续递归，走到字符串末尾就收集一组答案。",
+    "en": "I backtrack over cut positions and only recurse when the current substring is a palindrome, which prunes the search. Reaching the end of the string means I found a valid partition.",
+    "cx": "O(n * 2^n) time / O(n) space",
+    "trap": "单字符一定是回文；收集结果时要拷贝当前路径。"
+  },
+  {
+    "lc": 51,
+    "title": "N-Queens",
+    "diff": "Hard",
+    "pattern": "Backtracking",
+    "cn": "逐行放置皇后，用 col、r+c、r-c 三个集合记录被占用的列和两条对角线，冲突 O(1) 判断。",
+    "en": "I place one queen per row and use three sets to track occupied columns and both diagonals, keyed by row plus column and row minus column. That makes conflict checks O(1) and prunes the search heavily.",
+    "cx": "O(n!) time / O(n^2) space",
+    "trap": "r - c 可能为负，用集合存即可；每层回溯后要移除三个标记。"
+  },
+  {
+    "lc": 695,
+    "title": "Max Area of Island",
+    "diff": "Medium",
+    "pattern": "Grid DFS/BFS",
+    "cn": "扫到陆地就从该点 DFS，统计连通块大小并把走过的 1 改成 0，取最大值。",
+    "en": "I scan the grid and, whenever I hit land, flood fill with DFS to count the island and sink it to zero so it is never revisited. The largest count is the answer.",
+    "cx": "O(mn) time / O(mn) space",
+    "trap": "递归深度大时改用迭代 BFS；先判越界再判是否为 1。"
+  },
+  {
+    "lc": 417,
+    "title": "Pacific Atlantic Water Flow",
+    "diff": "Medium",
+    "pattern": "Multi-source DFS",
+    "cn": "正向逐格判断会超时。反过来：从太平洋和大西洋的边界向内 DFS，只能走向高度 >= 当前的邻居，两个可达集合求交集。",
+    "en": "Instead of testing every cell, I run DFS inward from the Pacific and Atlantic borders, moving only to neighbors of equal or greater height, then intersect the two reachable sets.",
+    "cx": "O(mn) time / O(mn) space",
+    "trap": "反向搜索是往更高或相等的地方走；用两个布尔矩阵分别标记。"
+  },
+  {
+    "lc": 684,
+    "title": "Redundant Connection",
+    "diff": "Medium",
+    "pattern": "Union-Find",
+    "cn": "并查集按顺序处理边，第一条两个端点已经连通的边就是形成环的那条，返回它。",
+    "en": "I process the edges with union-find. The first edge whose endpoints already share a root is the one that creates the cycle, so that edge is the answer.",
+    "cx": "O(n α(n)) time / O(n) space",
+    "trap": "需要路径压缩或按秩合并；返回的是边本身 [u, v]。"
+  },
+  {
+    "lc": 743,
+    "title": "Network Delay Time",
+    "diff": "Medium",
+    "pattern": "Dijkstra",
+    "cn": "单源最短路：从 k 出发用小顶堆跑 Dijkstra，答案是所有节点最短距离的最大值；有节点不可达返回 -1。",
+    "en": "This is a single-source shortest path problem, so I run Dijkstra from node k with a min-heap and take the maximum of the final distances. If any node stays unreachable, the answer is minus one.",
+    "cx": "O(E log V) time / O(V + E) space",
+    "trap": "建邻接表；距离数组初始化为无穷，起点为 0。"
+  },
+  {
+    "lc": 787,
+    "title": "Cheapest Flights Within K Stops",
+    "diff": "Medium",
+    "pattern": "Bellman-Ford",
+    "cn": "最多 k+1 条边，做 k+1 轮松弛。每轮必须用上一轮的距离快照，避免同一轮里串联多条边。",
+    "en": "I run Bellman-Ford for at most k+1 rounds and use a copy of the previous round's distances, so a path cannot use more edges than allowed within a single round.",
+    "cx": "O(k * E) time / O(V) space",
+    "trap": "必须用上一轮快照；k = 0 表示只能直飞。"
+  },
+  {
+    "lc": 5,
+    "title": "Longest Palindromic Substring",
+    "diff": "Medium",
+    "pattern": "Expand Around Center",
+    "cn": "每个位置作为中心向两边扩展，分奇数长度和偶数长度两种中心，记录最长。",
+    "en": "I expand around every possible center, both odd and even length, and track the longest. That is O(n^2) time and O(1) extra space, which is usually good enough.",
+    "cx": "O(n^2) time / O(1) space",
+    "trap": "偶数中心是 i 和 i+1；用左右边界算长度，别用错下标。"
+  },
+  {
+    "lc": 91,
+    "title": "Decode Ways",
+    "diff": "Medium",
+    "pattern": "1-D DP",
+    "cn": "dp[i] 表示前 i 个字符的解码方式数。单个数字非 0 贡献 dp[i-1]，两位数字在 10..26 之间贡献 dp[i-2]。",
+    "en": "Let dp of i be the number of ways to decode the first i characters. A single digit contributes dp of i minus one if it is not zero, and a valid two-digit number contributes dp of i minus two.",
+    "cx": "O(n) time / O(1) space (rolling)",
+    "trap": "'0' 不能单独解码；\"10\" 和 \"20\" 只有一种解法。"
+  },
+  {
+    "lc": 300,
+    "title": "Longest Increasing Subsequence",
+    "diff": "Medium",
+    "pattern": "Patience Sorting + Binary Search",
+    "cn": "维护 tails 数组，tails[i] 是长度为 i+1 的上升子序列的最小结尾。对新元素二分找插入位置替换。",
+    "en": "I keep a tails array where tails of i is the smallest possible tail of an increasing subsequence of length i plus one, and binary search for each new element's position. That gives O(n log n).",
+    "cx": "O(n log n) time / O(n) space",
+    "trap": "用 bisect_left；返回 len(tails)，tails 本身不是某个具体子序列。"
+  },
+  {
+    "lc": 139,
+    "title": "Word Break",
+    "diff": "Medium",
+    "pattern": "1-D DP",
+    "cn": "dp[i] 表示前 i 个字符能否被切分。枚举 j < i，若 dp[j] 且 s[j:i] 在字典中，则 dp[i] = true。",
+    "en": "dp of i is true if the first i characters can be segmented. For each i I check every j where dp of j holds and the substring from j to i is in the dictionary.",
+    "cx": "O(n^2) time / O(n) space",
+    "trap": "字典用 set；dictionary 里的词可重复使用，所以是切分问题不是背包。"
+  },
+  {
+    "lc": 152,
+    "title": "Maximum Product Subarray",
+    "diff": "Medium",
+    "pattern": "1-D DP",
+    "cn": "同时维护以当前位置结尾的最大乘积和最小乘积，因为乘负数会翻转大小关系。",
+    "en": "I track both the maximum and minimum product ending at the current index, because multiplying by a negative number flips them. Each step considers the current value alone, the previous max times it, and the previous min times it.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "更新 curMax 前先保存旧值，否则 curMin 会用到被污染的数据。"
+  },
+  {
+    "lc": 416,
+    "title": "Partition Equal Subset Sum",
+    "diff": "Medium",
+    "pattern": "0/1 Knapsack",
+    "cn": "等价于能否选出子集和为 sum/2。一维布尔 dp，容量倒序遍历保证每个数只用一次。",
+    "en": "This is a 0/1 knapsack: I check whether some subset sums to half the total. I use a one-dimensional boolean dp and iterate the capacity backwards so each number is used at most once.",
+    "cx": "O(n * sum) time / O(sum) space",
+    "trap": "总和为奇数直接返回 false；倒序遍历是关键。"
+  },
+  {
+    "lc": 72,
+    "title": "Edit Distance",
+    "diff": "Hard",
+    "pattern": "2-D DP",
+    "cn": "dp[i][j] 表示 word1 前 i 个字符转成 word2 前 j 个字符的最少操作数。字符相同取左上，否则 1 + min(删, 插, 换)。",
+    "en": "dp of i, j is the edit distance between the first i characters of word1 and the first j of word2. If the characters match it equals the diagonal value; otherwise it is one plus the best of delete, insert, and replace.",
+    "cx": "O(mn) time / O(mn) space",
+    "trap": "第一行和第一列分别初始化为 j 和 i；下标对应用 i-1 / j-1。"
+  },
+  {
+    "lc": 329,
+    "title": "Longest Increasing Path in a Matrix",
+    "diff": "Hard",
+    "pattern": "Memoized DFS",
+    "cn": "记忆化 DFS：dp[i][j] = 1 + 四个方向中值严格更大的格子的最长路径。严格递增保证无环。",
+    "en": "I memoize a DFS where each cell's value is one plus the best neighbor strictly greater than it. Because values strictly increase there are no cycles, so memoization makes it O(mn).",
+    "cx": "O(mn) time / O(mn) space",
+    "trap": "不需要 visited 数组；严格大于才递归，避免原地打转。"
+  },
+  {
+    "lc": 55,
+    "title": "Jump Game",
+    "diff": "Medium",
+    "pattern": "Greedy",
+    "cn": "维护最远可达下标 reach。遍历时若 i > reach 说明到不了终点；否则 reach = max(reach, i + nums[i])。",
+    "en": "I track the farthest index reachable so far. If the current index exceeds it, the end is unreachable; otherwise I update it with i plus nums of i.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "逐个更新 reach，不要只看最后一步；循环到末尾即可。"
+  },
+  {
+    "lc": 45,
+    "title": "Jump Game II",
+    "diff": "Medium",
+    "pattern": "Greedy (BFS levels)",
+    "cn": "按 BFS 分层：end 是当前跳跃范围的边界，farthest 是范围内能到的最远处。扫到 end 就跳一步、更新 end。",
+    "en": "I think of it as BFS levels: end is the boundary of the current jump range and farthest is the best I can reach from within it. When the scan reaches end, I take one more jump.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "循环到 n-2 即可，最后一步不用再跳。"
+  },
+  {
+    "lc": 435,
+    "title": "Non-overlapping Intervals",
+    "diff": "Medium",
+    "pattern": "Greedy + Intervals",
+    "cn": "按右端点排序，贪心保留结束最早的那个区间；后一个区间起点小于当前结束点就算重叠，需要移除。",
+    "en": "I sort by end time and greedily keep the interval that finishes earliest, counting any interval that starts before the last kept end as a removal. Finishing earliest leaves the most room for the rest.",
+    "cx": "O(n log n) time / O(1) space",
+    "trap": "边界相接（start == end）不算重叠；移除计数对应最少删除数。"
+  },
+  {
+    "lc": 136,
+    "title": "Single Number",
+    "diff": "Easy",
+    "pattern": "Bit Manipulation",
+    "cn": "全部异或：相同的数成对抵消为 0，最后剩下的就是只出现一次的数。",
+    "en": "XORing everything cancels the pairs because a XOR a is zero and XOR is commutative, leaving only the single number.",
+    "cx": "O(n) time / O(1) space",
+    "trap": "初始值取 0；异或满足交换律和结合律。"
+  },
+  {
+    "lc": 338,
+    "title": "Counting Bits",
+    "diff": "Easy",
+    "pattern": "Bit DP",
+    "cn": "dp[i] = dp[i >> 1] + (i & 1)：右移一位的 1 的个数加上最低位。",
+    "en": "The number of set bits in i equals the count in i shifted right by one, plus its lowest bit. That gives an O(n) dynamic program.",
+    "cx": "O(n) time / O(n) space",
+    "trap": "从 1 开始循环；dp 长度为 n+1，dp[0] = 0。"
+  },
+  {
+    "lc": 208,
+    "title": "Implement Trie (Prefix Tree)",
+    "diff": "Medium",
+    "pattern": "Trie",
+    "cn": "每个节点是 children 字典 + is_end 标记。insert 逐字符建节点；search 要求走完且 is_end；startsWith 只要走通即可。",
+    "en": "Each node holds a dictionary of children and an end-of-word flag. Insert walks or creates nodes per character, search additionally requires the end flag, and prefix search only requires the path to exist.",
+    "cx": "O(L) per operation / O(total chars) space",
+    "trap": "search 和 startsWith 的唯一差别就是最后是否检查 is_end。"
+  },
+  {
+    "lc": 212,
+    "title": "Word Search II",
+    "diff": "Hard",
+    "pattern": "Trie + Backtracking",
+    "cn": "把所有单词建成 Trie，在网格上 DFS 的同时沿 Trie 走。走到单词结尾就收集，并把该词清空去重。",
+    "en": "I build a trie of all the words, then DFS the board while walking the trie in parallel. When a trie node marks the end of a word I record it, and clearing that flag avoids duplicates.",
+    "cx": "O(mn * 4^L) worst case / O(total chars) space",
+    "trap": "需要 visited 回溯；找到词后清空 is_end 或从 Trie 中剪枝以加速。"
+  }
+]
