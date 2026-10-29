@@ -145,7 +145,10 @@ def pick(date_str: str, n_new: int, n_review: int, state: dict) -> tuple[list[di
             p["lc"],
         )
     )
-    review_picks = candidates[:n_review]
+    by_lc = {p["lc"]: p for p in bank}
+    pinned = [by_lc[lc] for lc in state.get("focus", []) if lc in by_lc]
+    already = {p["lc"] for p in new_picks} | {p["lc"] for p in pinned}
+    review_picks = (pinned + [p for p in candidates if p["lc"] not in already])[:n_review]
     return new_picks, review_picks
 
 
@@ -278,6 +281,8 @@ def main() -> int:
     ap.add_argument("--review", type=int, default=None)
     ap.add_argument("--preview", action="store_true")
     ap.add_argument("--solved", nargs="+", type=int, metavar="LC")
+    ap.add_argument("--focus", nargs="+", type=int, metavar="LC",
+                    help="pin problems to the next review session")
     ap.add_argument("--stats", action="store_true")
     args = ap.parse_args()
 
@@ -290,6 +295,17 @@ def main() -> int:
         return 0
 
     state = load_state()
+
+    if args.focus:
+        known = {p["lc"] for p in load_bank()} | {p["lc"] for p in parse_solved()}
+        unknown = [lc for lc in args.focus if lc not in known]
+        if unknown:
+            print(f"⚠️ 题库里没有这些题号：{unknown}", file=sys.stderr)
+        pins = state.get("focus", [])
+        state["focus"] = pins + [lc for lc in args.focus if lc in known and lc not in pins]
+        save_state(state)
+        print(f"已加入下次复习：{state['focus']}")
+        return 0
     history = state["history"]
 
     if args.date in {day["date"] for day in history} and not args.preview:
@@ -323,6 +339,8 @@ def main() -> int:
     state["history"].append(
         {"date": args.date, "new": [p["lc"] for p in new], "review": [p["lc"] for p in review]}
     )
+    delivered = {p["lc"] for p in review} | {p["lc"] for p in new}
+    state["focus"] = [lc for lc in state.get("focus", []) if lc not in delivered]
     save_state(state)
     print(f"已生成 {out.relative_to(ROOT)}")
     print(f"新题: {', '.join(p['title'] for p in new) or '—'}")
